@@ -1,0 +1,49 @@
+Question :
+
+
+Solution:
+
+#include <iostream>
+#include <stdio.h>
+#include <vector>
+#include <algorithm>
+#include <math.h>
+#define MOD 1000000007
+using namespace std;
+
+long long int fast_exp(long long int a, long long int b)
+{
+	if(b == 0) return 1;
+	long long int x = fast_exp(a, b/2);
+	x = (x * x)%MOD;
+	if(b&1) x = (x * a)%MOD;
+	return x;
+}
+
+int main()
+{
+	int t;
+	scanf("%d",&t);
+	while(t--)
+	{
+		int N;
+		scanf("%d",&N);
+		printf("%lld\n", (fast_exp(2,N) - 1 + MOD)%1000000007);
+	}
+	return 0;
+}
+
+
+Theory:
+
+A third method drastically reduces the number of operations to perform modular exponentiation, while keeping the same memory footprint as in the previous method. It is a combination of the previous method and a more general principle called exponentiation by squaring (also known as binary exponentiation).
+
+First, it is required that the exponent e be converted to binary notation. That is, e can be written as:
+{\displaystyle e=\sum _{i=0}^{n-1}a_{i}2^{i}} e=\sum _{i=0}^{n-1}a_{i}2^{i}
+In such notation, the length of e is n bits. ai can take the value 0 or 1 for any i such that 0 = i < n. By definition, an - 1 = 1.
+
+The value be can then be written as:
+{\displaystyle b^{e}=b^{\left(\sum _{i=0}^{n-1}a_{i}2^{i}\right)}=\prod _{i=0}^{n-1}\left(b^{2^{i}}\right)^{a_{i}}} b^{e}=b^{\left(\sum _{i=0}^{n-1}a_{i}2^{i}\right)}=\prod _{i=0}^{n-1}\left(b^{2^{i}}\right)^{a_{i}}
+The solution c is therefore:
+
+{\displaystyle c\equiv \prod _{i=0}^{n-1}\left(b^{2^{i}}\right)^{a_{i}}\ ({\mbox{mod}}\ m)} c\equiv \prod _{i=0}^{n-1}\left(b^{2^{i}}\right)^{a_{i}}\ ({\mbox{mod}}\ m)

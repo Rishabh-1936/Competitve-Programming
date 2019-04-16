@@ -1,0 +1,75 @@
+/* Read input from STDIN. Print your output to STDOUT*/
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <limits.h>
+#include <stdbool.h>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(int argc, char *a[])
+{
+        ios_base::sync_with_stdio(false);
+		cin.tie(NULL);
+        int t,sum,temp=0,n,num1,num2,num,f=0;
+        cin>>t;
+        while(t--){
+            cin>>n;
+            vector<int> neig(n),arr(n);
+            for(int i=0;i<n;++i){
+                cin>>neig[i];
+            }
+            sum=INT_MIN;f=0;
+            num1=INT_MIN,num2=INT_MIN;
+            for(int i=0;i<n-2;++i){
+                temp=neig[i]+neig[i+2];
+                arr[i]=temp;
+                //cout<<temp<<" temp "<<neig[i]<<" negh[i] "<<neig[i+2]<<" neig[i+2] "<<endl;
+                //if(temp<neig[i]){}
+                if(temp>sum){
+                    sum=temp;
+                    num1=neig[i];
+                    num2=neig[i+2];
+                }
+                else if(temp==sum){
+                    if(num2<neig[i+2]){
+                        num2=neig[i+2];
+                        num1=neig[i];
+                    }else if(num2==neig[i+2]){
+                        num1=num1;
+                        num2=num2;
+                    }
+                }
+                arr[n-2]=neig[n-2];
+                arr[n-1]=neig[n-1];
+                //cout<<"num2 "<<num2<<" num1 "<<num1<<endl;
+            }
+
+            int max_in_arr=*max_element(neig.begin(),neig.end());
+            
+            if(sum<=max_in_arr){
+              for(int i=0;i<n;++i){
+                if(arr[i]<max_in_arr){
+                    f=1;
+                    num=max_in_arr;
+                   // cout<<"! \n";
+                }
+            }
+            
+            }
+            
+/*
+            for(int i=0;i<n;++i){
+                if(arr[i]<neig[i]  && ){
+                    f=1;
+                    num=neig[i];
+                    chk=arr[i];
+
+                    cout<<"\n\n "<<arr[i]<<"  "<<neig[i]<<" \n\n";
+                }
+            }*/
+            f==0?cout<<num2<<num1<<"\n":cout<<num<<"\n";
+        }
+}

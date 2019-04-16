@@ -1,0 +1,22 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+int main() {
+	long int t;
+	long long P1, P2, K,S;
+	cin >> t;
+	while (t--) {
+		cin >> P1 >> P2 >> K;
+		S = (P1 + P2) / K;
+
+		if (S % 2 == 0) {
+
+			cout << "CHEF \n";
+		}
+		else {
+			cout << "COOK \n";
+		}
+
+	}
+	return 0;
+}

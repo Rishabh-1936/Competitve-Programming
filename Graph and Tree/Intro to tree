@@ -1,0 +1,176 @@
+
+                                                                              TREES
+
+Unlike Arrays, Linked Lists, Stack and queues, which are linear data structures, trees are hierarchical data structures.
+
+The topmost node is called root of the tree. The elements that are directly under an element are called its children. The element directly above something is called its parent. For example, ‘a’ is a child of ‘f’, and ‘f’ is the parent of ‘a’. Finally, elements with no children are called leaves.
+
+      tree
+      ----
+       j    <-- root
+     /   \
+    f      k  
+  /   \      \
+ a     h      z    <-- leaves 
+
+Main applications of trees include:
+1. Manipulate hierarchical data.
+2. Make information easy to search (see tree traversal).
+3. Manipulate sorted lists of data.
+4. As a workflow for compositing digital images for visual effects.
+5. Router algorithms
+6. Form of a multi-stage decision-making (see business chess).
+
+Binary Tree: A tree whose elements have at most 2 children is called a binary tree. Since each element in a binary tree can have only 2 children, we typically name them the left and right child.
+
+Binary Tree Representation in C++: A tree is represented by a pointer to the topmost node in tree. If the tree is empty, then value of root is NULL.
+A Tree node contains following parts.
+1. Data
+2. Pointer to left child
+3. Pointer to right child
+
+Tree Traversal : 
+
+1.Depth First Traversals:
+   (a) Inorder (Left, Root, Right)
+   (b) Preorder (Root, Left, Right)
+   (c) Postorder (Left, Right, Root)
+
+2.Breadth First or Level Order Traversal
+
+Progam to illustrate the working of structure .
+(We are using C++14 which provide constructor to structures also. If using lower versions then classes can be used also.)
+
+#include<iostream>
+using namespace std;
+
+struct TreeNode {
+	int data;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) :data(x), left(NULL), right(NULL) {};
+};
+
+class Solve {
+public:
+	TreeNode* insert(TreeNode* root, int data) {
+		// Here the insert function check if the pointer to the node is empty then it means 
+		// it is not pointing to any node. So it will create the new node if pointer is NULL.
+		if (root == NULL) {
+			return new TreeNode(data);
+		}
+		else {
+			TreeNode*cur;
+			if (data <= root->data) {
+
+				cur = insert(root->left, data);
+				// Here the cur will be the new and separate node which is not linked by any
+				// other node.So we need to make the root left or right pointer point to that new node 
+				root->left = cur;
+			}
+			else {
+
+				cur = insert(root->right, data);
+				root->right = cur;
+			}
+			return root;
+		}
+	}
+	void display_inOrder(TreeNode* root) {
+		if (root == NULL) {
+			return;
+		}
+		display_inOrder(root->left);
+		cout << root->data << " ";
+		display_inOrder(root->right);
+	}
+	void display_preOrder(TreeNode* root) {
+		if (root == NULL) {
+			return;
+		}
+		cout << root->data << " ";
+		display_preOrder(root->left);
+		display_preOrder(root->right);
+		
+	}
+
+	void display_postOrder(TreeNode* root) {
+		if (root == NULL) {
+			return;
+		}
+		display_postOrder(root->left);
+		display_postOrder(root->right);
+		cout << root->data << " ";
+	}
+};
+
+int main() {
+
+	Solve myTree;
+	//Default constructor
+	TreeNode* root = NULL;
+
+	int t;  //Number of entries
+	int data;
+
+	cin >> t;
+
+	while (t-- > 0) {
+		cin >> data;
+		root = myTree.insert(root, data);
+	}
+	cout << "\n InOrder \t : ";
+	myTree.display_inOrder(root);
+	
+	cout << "\n PreOrder \t : ";
+	myTree.display_preOrder(root);
+	
+	cout << "\n PostOrder \t : ";
+	myTree.display_postOrder(root);
+	
+	getchar();
+	return 0;
+}
+
+
+
+Time Complexity: O(n)
+Let us see different corner cases.
+Complexity function T(n) can be defined as:
+
+T(n) = T(k) + T(n – k – 1) + c
+
+Where k is the number of nodes on one side of root and n-k-1 on the other side.
+
+Let’s do an analysis of boundary conditions
+
+Case 1: Skewed tree (One of the subtrees is empty and other subtree is non-empty )
+
+k is 0 in this case.
+
+T(n) = T(0) + T(n-1) + c
+T(n) = 2T(0) + T(n-2) + 2c
+T(n) = 3T(0) + T(n-3) + 3c
+T(n) = 4T(0) + T(n-4) + 4c
+
+…………………………………………
+…………………………………………
+
+T(n) = (n-1)T(0) + T(1) + (n-1)c
+T(n) = nT(0) + (n)c
+
+Value of T(0) will be some constant say d. (traversing a empty tree will take some constants time)
+
+T(n) = n(c+d)
+T(n) = Θ(n) (Theta of n)
+
+Case 2: Both left and right subtrees have equal number of nodes.
+
+          T(n) = 2T(|_n/2_|) + c
+
+This recursive function is in the standard form (T(n) = aT(n/b) + (-)(n) ) for master method http://en.wikipedia.org/wiki/Master_theorem. 
+If we solve it by master method we get (-)(n)
+
+Auxiliary Space : If we don’t consider size of stack for function calls then O(1) otherwise O(n).
+
+

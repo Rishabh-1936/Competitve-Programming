@@ -1,0 +1,32 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+
+void input(int *arr,int N){
+    for(int i=0;i<N;++i){
+        cin>>arr[i];
+    }
+    sort(arr, arr+N, greater<int>());
+}
+int count(int *arr,int N,int K){
+    int num=0;
+        
+    for(int i=0;i<N;++i){
+                if(arr[i]>=arr[K-1]){
+                    ++num;
+        }
+    }
+    return num;
+}
+
+int main() 
+{ 
+    int T,N,K;
+    cin>>T;
+    while(T--){
+        cin>>N>>K;
+        int *arr=new int[N];
+        input(arr,N);
+        cout<<count(arr,N,K)<<"\n";
+    }
+	return 0; 
+}

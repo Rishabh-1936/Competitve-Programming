@@ -1,0 +1,32 @@
+Problem Statement:https://leetcode.com/problems/intersection-of-two-arrays-ii/
+
+
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> result;
+        if (!nums1.size() || !nums2.size()) 
+            return result;
+        if (nums1.size() > nums2.size()) 
+            _intersect(nums2, nums1, result);
+        else
+            _intersect(nums1, nums2, result);
+        
+        return result; 
+    }
+    
+    void _intersect(vector<int>& nums1, vector<int>& nums2, vector<int>& result) {
+        unordered_map<int, int> seen;
+        for (int i = 0; i < nums1.size(); ++i) {
+            ++seen[nums1[i]];
+        }
+        for (int i = 0; i < nums2.size(); ++i) {
+            if (seen[nums2[i]]) {
+                result.push_back(nums2[i]);
+                --seen[nums2[i]];
+            }
+            if (result.size() == nums1.size()) 
+                return;
+        }
+    }
+};

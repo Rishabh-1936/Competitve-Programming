@@ -1,0 +1,48 @@
+// Chef and The Right Triangles.c
+//https://www.codechef.com/problems/RIGHTRI
+#include <stdio.h>
+
+#ifndef ONLINE_JUDGE
+#define getcx getchar
+#else
+#define getcx getchar_unlocked
+#endif
+
+inline long getint (void) {
+	long x = 0; char ch = getcx();
+	while (ch<48 || 57<ch)
+		ch = getcx();
+	while (48<=ch && ch<=57) {
+		x = x*10+ch-48;
+		ch = getcx();
+	}
+	return x;
+}
+
+long n, count = 0;
+long x1, x2, x3, y1, y2, y3;
+long vx1, vx2, vx3, vy1, vy2, vy3;
+
+int main (void) {
+#ifndef ONLINE_JUDGE
+	freopen( "TESTS\\Chef and The Right Triangles.TXT", "r", stdin );
+#endif
+
+	n = getint();
+
+	while (n--) {
+		x1 = getint(); y1 = getint();
+		x2 = getint(); y2 = getint();
+		x3 = getint(); y3 = getint();
+		vx1 = x1-x2; vy1 = y1-y2;
+		vx2 = x2-x3; vy2 = y2-y3;
+		vx3 = x3-x1; vy3 = y3-y1;
+
+		if (vx1*vx2+vy1*vy2==0 || vx2*vx3+vy2*vy3==0 || vx1*vx3+vy1*vy3==0)
+			count++;
+	}
+
+	printf( "%d\n", count );
+
+	return 0;
+}

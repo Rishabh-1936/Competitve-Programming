@@ -1,0 +1,60 @@
+Ques:https://www.codechef.com/problems/HORSES
+
+
+Solution:
+
+#include<stdio.h>
+#include<assert.h>
+#define REP(i,a,b) for(i=a;i<b;i++)
+#define rep(i,n) REP(i,0,n)
+
+void intSort(int d[],int s){int i=-1,j=s,k,t;if(s<=1)return;k=(d[0]+d[s-1])/2;for(;;){while(d[++i]<k);while(d[--j]>k);if(i>=j)break;t=d[i];d[i]=d[j];d[j]=t;}intSort(d,i);intSort(d+j+1,s-j-1);}
+
+int main(){
+  int T, N, S[5000];
+  int i, res;
+
+  assert( scanf("%d",&T)==1 );
+  assert( 1<=T && T<=10 );
+  while(T--){
+    assert( scanf("%d",&N)==1 );
+    assert( 2<=N && N<=5000 );
+    rep(i,N) assert( scanf("%d",S+i)==1 ), assert( 1<=S[i] && S[i]<=1000000000 );
+    intSort(S, N); /* sort such as S[0] <= S[1] <= S[2] <= ... */
+    res = S[1] - S[0];
+    REP(i,2,N) if(res > S[i]-S[i-1]) res = S[i]-S[i-1];
+    printf("%d\n",res);
+  }
+
+  return 0;
+}
+
+
+/*
+Other one using STL
+
+int main()
+{
+	int t;
+	scanf("%d",&t);
+	while(t--)
+	{
+		int n;
+		scanf("%d",&n);
+
+		REP(i,n)
+			scanf("%d",&a[i]);
+
+		sort(a,a+n);
+
+		int ans=mod;
+
+		REP(i,n-1)
+			ans=min(ans,a[i+1]-a[i]);
+
+		printf("%d\n",ans);
+	}
+}
+
+*/
+

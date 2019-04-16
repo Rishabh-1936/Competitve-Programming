@@ -1,0 +1,63 @@
+Problem Statement:https://leetcode.com/problems/find-smallest-letter-greater-than-target/
+
+
+class Solution {
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        auto up = upper_bound(letters.begin(), letters.end(), target);
+        return (up == letters.end())? letters[0] : *up;
+    }
+};
+
+static auto makeMeFast = [](){
+    // turn off sync
+    std::ios::sync_with_stdio(false);
+    // untie in/out streams
+    std::cin.tie(NULL);
+    return 0;
+}();
+
+//==================================================================================================================================================
+
+Approach #1: Record Letters Seen [Accepted]
+Intuition and Algorithm
+
+Let's scan through letters and record if we see a letter or not. We could do this with an array of size 26, or with a Set structure.
+
+Then, for every next letter (starting with the letter that is one greater than the target), let's check if we've seen it. If we have, it must be the answer.
+
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+        boolean[] seen = new boolean[26];
+        for (char c: letters)
+            seen[c - 'a'] = true;
+
+        while (true) {
+            target++;
+            if (target > 'z') target = 'a';
+            if (seen[target - 'a']) return target;
+        }
+    }
+}
+
+//==================================================================================================================================================
+
+Approach #2: Binary Search [Accepted]
+
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+        int lo = 0, hi = letters.length;
+        while (lo < hi) {
+            int mi = lo + (hi - lo) / 2;
+            if (letters[mi] <= target) lo = mi + 1;
+            else hi = mi;
+        }
+        return letters[lo % letters.length];
+    }
+}
+
+Python
+class Solution(object):
+    def nextGreatestLetter(self, letters, target):
+        index = bisect.bisect(letters, target)
+        return letters[index % len(letters)]

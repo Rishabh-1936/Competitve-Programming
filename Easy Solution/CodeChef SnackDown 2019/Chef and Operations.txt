@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std; 
+
+void input(long int *A,long int *B,long int N){
+    for(int i=0;i<N;++i){
+        cin>>A[i];
+    }
+    for(int i=0;i<N;++i){
+        cin>>B[i];
+    }
+}
+
+int check(long int *A,long int *B,long int N){
+    int i=0;
+    long int sub=0;
+    while(i<=N-3){
+       
+       if(A[i]==B[i]) {
+            ++i;
+            continue;
+        }else if(A[i]<B[i]){
+          sub=B[i]-A[i];
+          A[i]+=sub;
+          A[i+1]+=2*sub;
+          A[i+2]+=3*sub;
+        }
+        else if(A[i]>B[i]){
+                  return -1;     
+        }   
+    }
+    return 1;
+}
+
+int main() 
+{ 
+    int T,K;
+    unsigned long int N;
+    cin>>T;
+    while(T--){
+        cin>>N;
+        long int *A=new long int[N];
+        long int *B=new long int[N];
+        input(A,B,N);
+        K=check(A,B,N);
+        if(K==-1){
+            cout<<"NIE \n";
+        }
+        else if(K==1){   
+            if((A[N-2]==B[N-2]) && (A[N-1]==B[N-1])){
+                cout<<"TAK \n";     
+              }
+              else{
+                  cout<<"NIE \n";
+              }
+        }
+    }
+	return 0; 
+}
